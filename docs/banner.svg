@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-labelledby="title desc">
+<title id="title">VM Bridge</title><desc id="desc">Local AI access to guest consoles and terminals, with on-demand workers and reviewed memory.</desc>
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#101a2b"/><stop offset="1" stop-color="#153b49"/></linearGradient><linearGradient id="line"><stop stop-color="#38d9b3"/><stop offset="1" stop-color="#6aa9ff"/></linearGradient></defs>
+<rect width="1200" height="320" rx="24" fill="url(#bg)"/>
+<g fill="none" stroke="#33516a" opacity=".35"><path d="M0 260H1200M0 220H1200M0 180H1200M0 140H1200M0 100H1200M0 60H1200"/><path d="M680 0V320M760 0V320M840 0V320M920 0V320M1000 0V320M1080 0V320M1160 0V320"/></g>
+<text x="64" y="78" fill="#69e7c6" font-family="Segoe UI,Arial,sans-serif" font-size="14" letter-spacing="4">LOCAL BY DESIGN</text>
+<text x="60" y="149" fill="#f3f8ff" font-family="Segoe UI,Arial,sans-serif" font-size="65" font-weight="700">VM Bridge</text>
+<text x="64" y="196" fill="#c3d7e7" font-family="Segoe UI,Arial,sans-serif" font-size="23">Your AI. Your VMs. Your machine.</text>
+<text x="64" y="258" fill="#95b4c9" font-family="Segoe UI,Arial,sans-serif" font-size="17">Guest console + SSH + MCP</text>
+<g fill="#162a3e" stroke="#3b637b" stroke-width="2"><rect x="725" y="105" width="154" height="112" rx="12"/><rect x="982" y="49" width="158" height="92" rx="12"/><rect x="982" y="181" width="158" height="92" rx="12"/></g>
+<g fill="none" stroke="url(#line)" stroke-width="3"><path d="M879 161H927V95H982M927 161V227H982"/><path d="m749 136 13 12-13 12m23 0h30"/></g>
+<g font-family="Segoe UI,Arial,sans-serif" fill="#e7f2fc" font-size="16"><text x="748" y="193">AI client</text><text x="1005" y="86">Guest console</text><text x="1005" y="218">Guest terminal</text></g>
+<g font-family="Segoe UI,Arial,sans-serif" fill="#6ce1c5" font-size="12"><text x="1005" y="113">Observe · act · verify</text><text x="1005" y="245">Existing SSH access</text></g>
+</svg>

@@ -1,0 +1,33 @@
+name: Windows tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
+        with:
+          version: '0.13.5'
+          enable-cache: false
+      - name: Install locked Windows dependencies
+        run: uv sync --locked --python 3.13
+      - name: Check public content
+        run: uv run --locked python scripts/check_publication.py --tracked
+      - name: Test synthetic consoles, SSH, MCP and process cleanup
+        run: uv run --locked pytest -q --junitxml=test-results/ci.xml
+      - name: Build distributions
+        run: uv build --wheel --sdist
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: vm-bridge-windows-build
+          path: dist/*
+          retention-days: 7

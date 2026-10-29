@@ -1,0 +1,4 @@
+interface:
+  display_name: "VM Control"
+  short_description: "VM-console en SSH zonder de host over te nemen"
+  default_prompt: "Gebruik $vm-control om de bedoelde VM te ontdekken en via haar eigen console of terminal te bedienen."

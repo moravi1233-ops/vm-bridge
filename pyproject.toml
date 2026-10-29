@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "vm-bridge-local"
+version = "0.4.0"
+description = "On-demand VMware console and terminal tools for a local coding assistant"
+readme = "README.md"
+license = "MIT"
+keywords = ["mcp", "vmware", "computer-use", "virtual-machines", "automation"]
+classifiers = ["Development Status :: 4 - Beta", "Environment :: Console", "Operating System :: Microsoft :: Windows", "Programming Language :: Python :: 3.13", "Topic :: System :: Systems Administration"]
+requires-python = ">=3.13,<3.14"
+dependencies = [
+  "vncdotool==1.4.2",
+  "Pillow>=11.3,<14",
+  "mcp==2.3.0",
+  "asyncssh==2.24.1",
+  "pywin32>=311; sys_platform == 'win32'",
+  "websockify==0.13.0",
+]
+
+[project.scripts]
+vmbridge = "vm_bridge.cli:main"
+vmbridge-mcp = "vm_bridge.mcp_server:main"
+
+[project.urls]
+Homepage = "https://github.com/moravi1233-ops/vm-bridge"
+Documentation = "https://github.com/moravi1233-ops/vm-bridge/tree/main/docs"
+Issues = "https://github.com/moravi1233-ops/vm-bridge/issues"
+
+[dependency-groups]
+dev = ["pytest>=8.4,<10", "pytest-asyncio>=1,<2"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/vm_bridge"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+

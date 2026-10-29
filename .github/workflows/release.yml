@@ -1,0 +1,43 @@
+name: Release
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: windows-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
+        with:
+          version: '0.13.5'
+          enable-cache: false
+      - run: uv sync --locked --python 3.13
+      - run: uv run --locked python scripts/check_publication.py --tracked
+      - name: Match release tag to package version
+        shell: pwsh
+        run: |
+          $version = uv run --locked python -c "from vm_bridge import __version__; print(__version__)"
+          if ($env:GITHUB_REF_NAME -ne "v$version") { throw 'Tag/package version mismatch' }
+      - run: uv run --locked pytest -q
+      - run: uv build --wheel --sdist
+      - name: Write artifact checksums
+        shell: pwsh
+        run: |
+          Get-ChildItem dist -File | ForEach-Object { "$(($_ | Get-FileHash -Algorithm SHA256).Hash.ToLower())  $($_.Name)" } | Set-Content dist/SHA256SUMS.txt -Encoding utf8NoBOM
+      - name: Publish tested release assets
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          gh release create "$env:RELEASE_TAG" dist/* --verify-tag --title "VM Bridge $env:RELEASE_TAG" --generate-notes --notes-file .github/release-notes.md
