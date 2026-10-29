@@ -32,7 +32,7 @@ jobs:
       - name: Write artifact checksums
         shell: pwsh
         run: |
-          Get-ChildItem dist -File | ForEach-Object { "$(($_ | Get-FileHash -Algorithm SHA256).Hash.ToLower())  $($_.Name)" } | Set-Content dist/SHA256SUMS.txt -Encoding utf8NoBOM
+          Get-ChildItem -Path 'dist/*.whl','dist/*.tar.gz' -File | ForEach-Object { "$(($_ | Get-FileHash -Algorithm SHA256).Hash.ToLower())  $($_.Name)" } | Set-Content dist/SHA256SUMS.txt -Encoding utf8NoBOM
       - name: Publish tested release assets
         shell: pwsh
         env:
@@ -40,4 +40,4 @@ jobs:
           GH_REPO: ${{ github.repository }}
           RELEASE_TAG: ${{ github.ref_name }}
         run: |
-          gh release create "$env:RELEASE_TAG" dist/* --verify-tag --title "VM Bridge $env:RELEASE_TAG" --generate-notes --notes-file .github/release-notes.md
+          gh release create "$env:RELEASE_TAG" dist/*.whl dist/*.tar.gz dist/SHA256SUMS.txt --verify-tag --title "VM Bridge $env:RELEASE_TAG" --generate-notes --notes-file .github/release-notes.md

@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Limit release uploads and checksums to the tested package archives, excluding the build tool's generated ignore file.
+
 ## 0.4.0 — 2026-10-29
 
 First public beta release.
